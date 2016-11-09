@@ -1,0 +1,14 @@
+---
+
+hostname: package.local
+
+user_name: vagrant
+user_group: vagrant
+user_password: vagrant
+
+static:
+  hostname: static.{{ hostname }}
+  document_root: "{{ project_root }}/www/static"
+  error_log: "{{ log_root }}/httpd/static_error_log"
+  access_log: "{{ log_root }}/httpd/static_access_log combined"
+  basic_auth: no

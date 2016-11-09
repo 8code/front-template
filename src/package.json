@@ -1,0 +1,62 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "8code",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "browserify-shim": "^3.8.11",
+    "grunt": "^0.4.5",
+    "grunt-assemble": "^0.4.0",
+    "grunt-autoprefixer": "^3.0.3",
+    "grunt-browserify": "^4.0.1",
+    "grunt-contrib-compress": "^1.3.0",
+    "grunt-contrib-connect": "^0.11.2",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-handlebars": "^0.11.0",
+    "grunt-contrib-imagemin": "^1.0.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-prettify": "^0.4.0",
+    "grunt-sass": "^1.1.0",
+    "grunt-sass-globbing": "^1.4.0",
+    "grunt-spritesmith": "^6.1.0",
+    "handlebars-helpers": "^0.5.8",
+    "load-grunt-tasks": "^3.4.0"
+  },
+  "dependencies": {},
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "jquery": "./js/libs/jquery.js",
+    "lodash": "./js/libs/lodash",
+    "mobileEvents": "./js/libs/jquery.mobile-events.js",
+    "is": "./js/libs/is.js",
+    "Handlebars": "./js/libs/handlebars.runtime.js",
+    "slick": "./js/libs/slick.js",
+    "imagesloaded": "./js/libs/imagesloaded.pkgd.min.js",
+    "cookie": "./js/libs/jquery.cookie.js"
+  },
+  "browserify-shim": {},
+  "static_html": "../www/static",
+  "public": "../www/html",
+  "img": "assets/themes/package/img",
+  "js": "assets/themes/package/js",
+  "css": "assets/themes/package/css",
+  "font": "assets/themes/package/fonts",
+  "src": {
+    "img": "./img",
+    "js": "./js",
+    "scss": "./scss",
+    "hbs": "./hbs"
+  },
+  "port": 6002
+}
