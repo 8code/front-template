@@ -1,5 +1,5 @@
 import gulp from 'gulp'
-
+import babelRegister from 'gulp'
 import transform from 'vinyl-transform'
 import browserify from 'browserify'
 //import watchify from 'watchfy'
