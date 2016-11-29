@@ -3,12 +3,12 @@ import babelRegister from 'gulp'
 import transform from 'vinyl-transform'
 import browserify from 'browserify'
 //import watchify from 'watchfy'
-import assemble from 'assemble'
+//import assemble from 'assemble'
 import gulpLoadPlugins from 'gulp-load-plugins'
 
 const $ = gulpLoadPlugins()
-const app = assemble()
-const pkg = require('package.json')
+//const app = assemble()
+const pkg = require('./package.json')
 
 
 /**
@@ -36,18 +36,18 @@ gulp.task('uglify', () => {
 /**
  * assemble
  */
-gulp.task('load', (cb) => {
-  app.layouts(`${ pkg.src.hbs }/layouts/`);
-  app.pages(`${ pkg.src.hbs }/*.hbs`);
-  app.partials(`${ pkg.src.hbs }/partials/**/*.hbs`);
-  cb();
-})
+// gulp.task('load', (cb) => {
+//   app.layouts(`${ pkg.src.hbs }/layouts/`);
+//   app.pages(`${ pkg.src.hbs }/*.hbs`);
+//   app.partials(`${ pkg.src.hbs }/partials/**/*.hbs`);
+//   cb();
+// })
 
-gulp.task('assemble', ['load'], () => {
-  return app.toStream('pages')
-    .pipe(app.renderFile())
-    .pipe(app.dest(`${ pkg.static_html }/`))
-})
+// gulp.task('assemble', ['load'], () => {
+//   return app.toStream('pages')
+//     .pipe(app.renderFile())
+//     .pipe(app.dest(`${ pkg.static_html }/`))
+// })
 
 
 /**
@@ -270,7 +270,7 @@ gulp.task('serve', () => {
  * watch
  */
 
-galp.task('watch', () => {
+gulp.task('watch', () => {
   gulp.watch(`${ pkg.src.hbs }/**/*.+(hbs|yml|json)`, ['browserify']);
   gulp.watch(`${ pkg.src.scss }/**/*.scss`, ['sass']);
   gulp.watch(`${ pkg.src.js }/**/*.js`, ['browserify']);
@@ -289,7 +289,7 @@ galp.task('watch', () => {
   // 'copy:js'
 })
 
-gulp.task('default', ['babel', 'watch']);
+gulp.task('default', ['watch']);
 gulp.task('publish', [
   'imagemin'/*,
   'copy:image'*/
