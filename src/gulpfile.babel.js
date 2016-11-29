@@ -1,13 +1,15 @@
 import gulp from 'gulp'
-import babelRegister from 'gulp'
-import transform from 'vinyl-transform'
+import assemble from 'assemble'
 import browserify from 'browserify'
-//import watchify from 'watchfy'
-//import assemble from 'assemble'
+import babelify from 'babelify'
+import watchify from 'watchify'
+import source from 'vinyl-source-stream'
+import buffer from 'vinyl-buffer'
+import through2 from 'through2'
 import gulpLoadPlugins from 'gulp-load-plugins'
 
 const $ = gulpLoadPlugins()
-//const app = assemble()
+const app = assemble()
 const pkg = require('./package.json')
 
 
@@ -15,45 +17,51 @@ const pkg = require('./package.json')
  * javascript
  */
 gulp.task('browserify', () => {
-  return gulp.src( `${ pkg.src.js }/script.js` )
-    .pipe($.babel())
-    .pipe(transform((filename)=> {
-      return browserify(filename, {
-        debug: true
-      }).bundle()
-    }))
-    .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.js }/build.js`))
-})
 
-gulp.task('uglify', () => {
-  gulp.src( `${ pkg.static_html }/${ pkg.js }/build.js` )
-    .pipe($.babel())
-    .pipe($.uglify())
-    .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.js }/${ pkg.js }/build.min.js`))
+  var bundler = watchify(browserify({cache: {}, packageCache: {}}));
+  bundler.add(`${ pkg.src.js }/script.js`);
+  var bundle = () => {
+    bundler.bundle()
+      .pipe(source('build.js'))
+      .pipe(buffer())
+      .pipe($.uglify())
+      .pipe($.rename('build.min.js'))
+      .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.js }/`))
+  };
+  bundler.on('update', bundle)
+  bundler.on('error', (err) => {
+        console.log(err.message);
+        this.emit('end');
+  })
+
+  bundle();
 })
 
 
 /**
  * assemble
  */
-// gulp.task('load', (cb) => {
-//   app.layouts(`${ pkg.src.hbs }/layouts/`);
-//   app.pages(`${ pkg.src.hbs }/*.hbs`);
-//   app.partials(`${ pkg.src.hbs }/partials/**/*.hbs`);
-//   cb();
-// })
+gulp.task('load', (cb) => {
+  app.layouts(`${ pkg.src.hbs }/layouts/*.hbs`);
+  app.pages(`${ pkg.src.hbs }/*.hbs`);
+  app.partials(`${ pkg.src.hbs }/partials/**/*.hbs`);
+  cb();
+})
 
-// gulp.task('assemble', ['load'], () => {
-//   return app.toStream('pages')
-//     .pipe(app.renderFile())
-//     .pipe(app.dest(`${ pkg.static_html }/`))
-// })
+gulp.task('assemble', ['load'], () => {
+  return app.toStream('pages')
+    .pipe(app.renderFile())
+    .pipe($.rename({
+      extname: '.html'
+    }))
+    .pipe(app.dest(`${ pkg.static_html }/`))
+})
 
 
 /**
  * prettify html files
  */
-gulp.task('prettify', () => {
+gulp.task('prettify', ['assemble'], () => {
   gulp.src( `${ pkg.static_html }/**/*.html` )
     .pipe($.prettify({
       config: '.prettifyrc'
@@ -63,56 +71,63 @@ gulp.task('prettify', () => {
 
 
 /**
+ * globbing
+ */
+gulp.task('sass_globbing', () => {
+
+  let files = [
+        'base',
+        'constants',
+        'layouts',
+        'mixins',
+        'modules',
+        'utils'
+      ];
+
+  let globbing = (files) => {
+    files.forEach(f => {
+      gulp.src(`${f}/*.scss`, {cwd: `${ pkg.src.scss }/`})
+        .pipe($.sassGlobbing(
+          {
+            path: `_${f}.scss`
+          },
+          {
+            useSingleQuotes: true,
+            signature: '/* generated with gulp-sass-globbing */'
+          }
+        ))
+        //.pipe($.sass())
+        .pipe(gulp.dest(`${ pkg.src.scss }/generated/`))
+    });
+  };
+
+  // taskをforEachとか破壊力高いので何とかしたい
+  globbing(files);
+})
+
+
+/**
  * scss
  */
-gulp.task('sass', () => {
-  return gulp.src(`${ pkg.src.scss }/(style|print)+.scss`)
-    .pipe(plumber({
+gulp.task('sass', ['sass_globbing'], () => {
+  return gulp.src(`${ pkg.src.scss }/{style,print}.scss`)
+    .pipe($.plumber({
       errorHandler: function(err) {
         console.log(err.messageFormatted);
         this.emit('end');
       }
     }))
     .pipe($.sass({
-      sourceMap: false
+      sourceMap: true
     }))
     .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.css }/`))
 })
 
 
 /**
- * globbing
- */
-gulp.task('sass_globbing', () => {
-  return gulp.src(`${ pkg.src.scss }/base/*.scss`)
-    .pipe($.sassGlob({
-      useSingleQuotes: true
-    }))
-    .pipe($.sass())
-    .pipe(gulp.dest(`${ pkg.src.scss }/generated/_base.scss`))
-
-      // '<%= pkg.src.scss %>/generated/_constants.scss': [
-      //   '<%= pkg.src.scss %>/constants/*.scss'
-      // ],
-      // '<%= pkg.src.scss %>/generated/_layouts.scss': [
-      //   '<%= pkg.src.scss %>/layouts/*.scss'
-      // ],
-      // '<%= pkg.src.scss %>/generated/_mixins.scss': [
-      //   '<%= pkg.src.scss %>/mixins/*.scss'
-      // ],
-      // '<%= pkg.src.scss %>/generated/_modules.scss': [
-      //   '<%= pkg.src.scss %>/modules/*.scss'
-      // ],
-      // '<%= pkg.src.scss %>/generated/_utils.scss': [
-      //   '<%= pkg.src.scss %>/utils/*.scss'
-      // ]
-})
-
-
-/**
  * autoprefixer
  */
-gulp.task('autoprefixer', () => {
+gulp.task('autoprefixer', ['sass'], () => {
   gulp.src(`${ pkg.static_html }/${ pkg.css }/style.css`)
     .pipe($.autoprefixer({
       browsers: [
@@ -121,50 +136,22 @@ gulp.task('autoprefixer', () => {
         'safari 8'
       ]
     }))
-    .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.css }/style.css`))
+    .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.css }/`))
 })
-
-
-/**
- * copy
- */
-// gulp.task('copy', () => {
-//   return gulp.src(``)
-
-//   image: {
-//     expand: true,
-//     cwd: '<%= pkg.static_html %>/<%= pkg.img %>/',
-//     src: '**/*',
-//     dest: '<%= pkg.public %>/<%= pkg.img %>/',
-//     filter: 'isFile',
-//   },
-//   css: {
-//     expand: true,
-//     cwd: '<%= pkg.static_html %>/<%= pkg.css %>/',
-//     src: '**/*',
-//     dest: '<%= pkg.public %>/<%= pkg.css %>/',
-//     filter: 'isFile',
-//   },
-//   js: {
-//     expand: true,
-//     cwd: '<%= pkg.static_html %>/<%= pkg.js %>/',
-//     src: 'build.min.js',
-//     dest: '<%= pkg.public %>/<%= pkg.js %>/',
-//     filter: 'isFile',
-//   }
-// })
 
 
 /**
  * minify-css
  */
-gulp.task('minify-css', () => {
-  return gulp.src(`${ pkg.static_html }/${ pkg.css }/(*|!*.min).css`)
-    .pipe($.cleanCSS({
+gulp.task('minify-css', ['autoprefixer'], () => {
+  return gulp.src([
+      `${ pkg.static_html }/${ pkg.css }/*.css`,
+      `!${ pkg.static_html }/${ pkg.css }/*.min.css`,
+    ])
+    .pipe($.cleanCss({
       debug: true
     }, (details) => {
-      console.log(details.name + ': ' + details.stats.originalSize);
-      console.log(details.name + ': ' + details.stats.minifiedSize);
+      console.log(`${ details.name }: ${ details.stats.originalSize } Byte > ${ details.stats.minifiedSize } Byte`);
     } ))
     .pipe($.rename({
       extname: '.min.css'
@@ -174,15 +161,33 @@ gulp.task('minify-css', () => {
 
 
 /**
+ * copy
+ */
+gulp.task('copy', () => {
+  return gulp.src(
+    [
+      `${ pkg.static_html }/${ pkg.img }`,
+      `${ pkg.static_html }/${ pkg.css }`,
+      `${ pkg.static_html }/${ pkg.js }`
+    ],
+    {
+      base: `${ pkg.static_html }`
+    })
+    .pipe(gulp.dest(`${ pkg.public }/`));
+})
+
+
+/**
  * imagemin
  */
-// gulp.task('imagemin', () => {
-//   gulp.src(`${ pkg.static_html }/${ pkg.src.img }/**/(*|!sprite).+(png|jpg|jpeg|svg)`)
-//     .pipe($.imagemin({
-//       optimizationLevel: 3
-//     }))
-//     .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.img }/`)
-// })
+gulp.task('imagemin', () => {
+  gulp.src([`${ pkg.static_html }/${ pkg.src.img }/**/*.{png,jpg,jpeg,svg}`,
+            `!${ pkg.static_html }/${ pkg.src.img }/sprite/*.png`])
+    .pipe($.imagemin({
+      optimizationLevel: 3
+    }))
+    .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.img }/`))
+})
 
 
 /**
@@ -193,24 +198,24 @@ gulp.task('compress', () => {
     gulp.src(`${ pkg.public }/${ pkg.css }/*.min.css`)
       .pipe($.gzip({
         append: true,
-        preExtension: 'gz',
         gzipOptions: {
           level: 9
         }
       }))
-      .pipe(gulp.dest('./'))
+      .pipe(gulp.dest(`${ pkg.public }/${ pkg.css }/`))
   };
   let js = () => {
     gulp.src(`${ pkg.public }/${ pkg.js }/*.min.js`)
       .pipe($.gzip({
         append: true,
-        preExtension: 'gz',
         gzipOptions: {
           level: 9
         }
       }))
-      .pipe(gulp.dest('./'))
-  }
+      .pipe(gulp.dest(`${ pkg.public }/${ pkg.js }/`))
+  };
+  css();
+  js();
 })
 
 
@@ -218,68 +223,50 @@ gulp.task('compress', () => {
  * spritesmith
  */
 gulp.task('sprite', () => {
-  let all = () => {
-    return gulp.src(`${ pkg.src.img }/sprite/*.png`)
-      .pipe($.spritesmith({
-        imgName: 'spritesheet.png',
-        cssName: '_sprites.scss',
-        imgPath: `${ pkg.img }/spritesheet.png`
-      }))
-      .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.img }/`))
-  };
-  let mobile = () => {
-    return gulp.src(`${ pkg.src.img }/sprite/mobile/*.png`)
-      .pipe($.spritesmith({
-        imgName: 'spritesheet.mobile.png',
-        cssName: '_sprites.mobile.scss',
-        imgPath: `${ pkg.img }/spritesheet.mobile.png`
-      }))
-      .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.img }/`))
-  }
+  let desktop = gulp.src(`${ pkg.src.img }/sprite/*.png`)
+                  .pipe($.spritesmith({
+                    imgName: 'spritesheet.png',
+                    cssName: `_sprites.scss`,
+                    imgPath: `${ pkg.img }/spritesheet.png`,
+                    padding: 20
+                  }));
+  let mobile = gulp.src(`${ pkg.src.img }/sprite/mobile/*.png`)
+                .pipe($.spritesmith({
+                  imgName: 'spritesheet.mobile.png',
+                  cssName: '_sprites.mobile.scss',
+                  imgPath: `${ pkg.img }/spritesheet.mobile.png`,
+                  padding: 40
+                }));
+
+  // 書き方次第でまとめられそう
+  desktop.img.pipe(gulp.dest(`${ pkg.static_html }/${ pkg.img }/`));
+  desktop.css.pipe(gulp.dest(`${ pkg.src.scss }/`));
+  mobile.img.pipe(gulp.dest(`${ pkg.static_html }/${ pkg.img }/`));
+  mobile.css.pipe(gulp.dest(`${ pkg.src.scss }/`));
 })
 
 
 /**
  * serve
+ * e.g. hostsに[127.0.0.1 localhost]が記載されている必要があります。
  */
 gulp.task('serve', () => {
   gulp.src(`${ pkg.static_html }/`)
-      .pipe(webserver({
+      .pipe($.webserver({
           livereload: true,
           port: `${ pkg.port }`,
           host: 'localhost'
       }));
 })
 
-/**
- * serve
- */
-// connect: {
-//   server: {
-//     options: {
-//       livereload: true,
-//       keepalive: true,
-//       port: '<%= pkg.port %>',
-//       base: '<%= pkg.static_html %>',
-//       open: 'http://localhost:<%= pkg.port %>',
-//     }
-//   }
-// }
 
 /**
  * watch
  */
-
 gulp.task('watch', () => {
-  gulp.watch(`${ pkg.src.hbs }/**/*.+(hbs|yml|json)`, ['browserify']);
-  gulp.watch(`${ pkg.src.scss }/**/*.scss`, ['sass']);
+  gulp.watch(`${ pkg.src.hbs }/**/*.{hbs,yml,json}`, ['prettify']);
+  gulp.watch(`${ pkg.src.scss }/**/*.scss`, ['minify-css']);
   gulp.watch(`${ pkg.src.js }/**/*.js`, ['browserify']);
-
-  // 'sass_globbing',
-  // 'sass',
-  // 'autoprefixer',
-  // 'cssmin',
-  // 'copy:css'
 
   // 'assemble',
   // 'prettify'
@@ -289,8 +276,10 @@ gulp.task('watch', () => {
   // 'copy:js'
 })
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['serve', 'watch']);
+
 gulp.task('publish', [
-  'imagemin'/*,
-  'copy:image'*/
+  'imagemin',
+  'copy',
+  'compress'
 ]);

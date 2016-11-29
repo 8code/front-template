@@ -1,7 +1,7 @@
-var _, utils;
+var _, Utils;
 
 _ = require('lodash');
-utils = require('../pjapp/utill');
+Utils = require('./Utils');
 require('mobileEvents');
 
 //
@@ -23,7 +23,7 @@ navigation.init = function(){
 
   this.sub = '.gnav-menu__sub';
 
-  if(this.el == null || !utils.isMobile) {
+  if(this.el == null || !Utils.isMobile) {
     return;
   }
 

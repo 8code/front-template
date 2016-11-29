@@ -15,6 +15,7 @@ var scroll,
     pagetop,
     map;
 
+
 var initialize = function() {
 
   Utils.$window = $(window);
@@ -44,4 +45,5 @@ var initialize = function() {
 
 $(function(){
   initialize();
+  console.log('run');
 });
