@@ -28,28 +28,30 @@ published: false
   <meta name="twitter:url" content="http://domain/{{ og_url }}" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="http://domain/assets/img/og.jpg" />
-
   <link rel="alternate" hreflang="{{ lang }}" href="http://domain/{{ lang }}/" />
-  {{!--  <link rel="stylesheet" href="/assets/css/print.css" media="print">  --}}
-  {{!-- <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png"> --}}
-  {{!-- <link rel="icon" href="/assets/img/favicon_32_32.png"> --}}
+  <link rel="stylesheet" href="{{ assets }}/css/style.css" media="screen">
+  {{!-- <link rel="stylesheet" href="{{ assets }}/css/print.css" media="print">  --}}
+  {{!-- <link rel="apple-touch-icon" href="{{ assets }}/img/apple-touch-icon.png"> --}}
+  {{!-- <link rel="icon" href="{{ assets }}/img/favicon_32_32.png"> --}}
   <!--[if IE 9 ]>
     <style>
     </style>
   <![endif]-->
 </head>
 <body class="">
+  <div id="fb-root"></div>
+
   <div class="l-container">
     {{> _header }}
 
-    {{> body }}
+    {% body %}
 
     {{> _footer }}
   </div>
 
-  //<script src="https://maps.googleapis.com/maps/api/js?key="></script>
-  <script src="/assets/js/build.min.js"></script>
-
+  <!--script src="https://maps.googleapis.com/maps/api/js?key="></script-->
+  <script src="{{ assets }}/js/build.min.js"></script>
+  <script src="//scdn.line-apps.com/n/line_it/thirdparty/loader.min.js" async="async" defer="defer" ></script>
   <script>
     // GoogleAnalyticsObject
   </script>

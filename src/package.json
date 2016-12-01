@@ -9,10 +9,14 @@
   "license": "ISC",
   "devDependencies": {
     "babel": "^6.5.2",
+    "babel-core": "^6.18.2",
+    "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-register": "^6.18.0",
+    "babelify": "^7.3.0",
     "bower": "^1.8.0",
     "browserify": "^12.0.2",
+    "browserify-shim": "^3.8.12",
     "debowerify": "^1.5.0",
     "gulp": "^3.9.1",
     "gulp-assemble": "^0.3.3",
@@ -29,39 +33,55 @@
     "gulp-prettify": "^0.5.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
-    "gulp-sass-glob": "^1.0.6",
+    "gulp-sass-globbing": "0.0.2",
+    "gulp-sourcemaps": "^1.9.1",
     "gulp-uglify": "^2.0.0",
     "gulp-watch": "^4.3.10",
     "gulp-webserver": "^0.9.1",
     "gulp.spritesmith": "^6.2.1",
     "handlebars-helpers": "^0.5.8",
-    "vinyl-transform": "^1.0.0"
+    "through2": "^2.0.3",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "vinyl-transform": "^1.0.0",
+    "watchify": "^3.7.0"
   },
   "dependencies": {
     "gulp-util": "^3.0.7",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.7.0"
+    "velocity-animate": "^1.3.1"
   },
   "browserify": {
     "transform": [
-      "browserify",
-      "browserify-shim"
+      [
+        "browserify-shim",
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
     ]
   },
   "babel": {
-    "presets": ["es2015"]
+    "presets": [
+      "es2015"
+    ]
+  },
+  "browserify-shim": {
+    "jquery": "global:$"
   },
   "browser": {
-    "jquery": "./js/libs/jquery.js",
-    "lodash": "./js/libs/lodash",
+    "jQuery": "./js/libs/jquery.js",
+    "lodash": "./js/libs/lodash.min.js",
     "mobileEvents": "./js/libs/jquery.mobile-events.js",
     "is": "./js/libs/is.js",
     "Handlebars": "./js/libs/handlebars.runtime.js",
     "slick": "./js/libs/slick.js",
     "imagesloaded": "./js/libs/imagesloaded.pkgd.min.js",
-    "cookie": "./js/libs/jquery.cookie.js"
+    "cookie": "./js/libs/jquery.cookie.js",
+    "velocity": "./node_modules/velocity-animate/velocity.js"
   },
-  "browserify-shim": {},
   "static_html": "../www/static",
   "public": "../www/html",
   "img": "assets/themes/package/img",

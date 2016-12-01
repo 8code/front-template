@@ -1,7 +1,7 @@
-var _, utils;
+var _, Utils;
 
 _ = require('lodash');
-utils = require('utils');
+Utils = require('./utils');
 
 
 // google APIオプション用オブジェクト
@@ -29,7 +29,7 @@ gmap.init = function(){
   this.conf = {
     project: '{{ project }}',
     markerPath: '/assets/themes/{{ theme-name }}/img/marker/default.png',
-    marker: { width: {{ size }}, height: {{ size }} }
+    marker: { width: '{{ size }}', height: '{{ size }}' },
     zoom: 15,
     scrollwheel: false,
     draggable: true,
@@ -39,7 +39,7 @@ gmap.init = function(){
     ]
   };
 
-  if(utils.getWindowWidth() < utils.MOBILE_WIDTH) {
+  if(Utils.getWindowWidth() < Utils.MOBILE_WIDTH) {
     this.conf.draggable = false;
     this.conf.disableDoubleClickZoom = true;
   }
@@ -62,7 +62,7 @@ gmap.init = function(){
 gmap.bind = function(){
 
   this.onResizeWindow = _.bind(this.onResizeWindow, this);
-  utils.$window.on('resize', _.debounce(this.onResizeWindow, 200));
+  Utils.$window.on('resize', _.debounce(this.onResizeWindow, 200));
 };
 
 
@@ -120,7 +120,7 @@ gmap.draw = function(el){
 //   var i, latlng, scaledSize, $this;
 
 //   //状態によってオプションを更新
-//   if(utils.getWindowWidth() < utils.MOBILE_WIDTH) {
+//   if(Utils.getWindowWidth() < Utils.MOBILE_WIDTH) {
 //     //mk = { w: this.conf.markerSP.width, h: this.conf.markerSP.width };
 //     this.conf.draggable = false;
 //     this.conf.disableDoubleClickZoom = true;
