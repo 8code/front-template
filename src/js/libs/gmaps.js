@@ -122,7 +122,7 @@ var getElementsByClassName = function (class_name, context) {
     var element,
         _class = class_name.replace('.', '');
 
-    if ('jQuery' in this && context) {
+    if ('jquery' in this && context) {
         element = $("." + _class, context)[0];
     } else {
         element = document.getElementsByClassName(_class)[0];
@@ -135,7 +135,7 @@ var getElementById = function(id, context) {
   var element,
   id = id.replace('#', '');
 
-  if ('jQuery' in window && context) {
+  if ('jquery' in window && context) {
     element = $('#' + id, context)[0];
   } else {
     element = document.getElementById(id);

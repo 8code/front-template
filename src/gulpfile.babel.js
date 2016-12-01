@@ -5,6 +5,7 @@ import babelify from 'babelify'
 import watchify from 'watchify'
 import source from 'vinyl-source-stream'
 import buffer from 'vinyl-buffer'
+import transform from 'vinyl-transform'
 import through2 from 'through2'
 import gulpLoadPlugins from 'gulp-load-plugins'
 
@@ -18,23 +19,15 @@ const pkg = require('./package.json')
  */
 gulp.task('browserify', () => {
 
-  var bundler = watchify(browserify({cache: {}, packageCache: {}}));
-  bundler.add(`${ pkg.src.js }/script.js`);
-  var bundle = () => {
-    bundler.bundle()
-      .pipe(source('build.js'))
-      .pipe(buffer())
-      .pipe($.uglify())
-      .pipe($.rename('build.min.js'))
-      .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.js }/`))
-  };
-  bundler.on('update', bundle)
-  bundler.on('error', (err) => {
-        console.log(err.message);
-        this.emit('end');
-  })
-
-  bundle();
+  watchify(browserify(`${ pkg.src.js }/script.js`, { debug: true }))
+    .transform(babelify, { presets: ['es2015'] })
+    .bundle()
+    .on('error', (err) => { console.log(`Error : ${ err.message }`); /*console.log(err.stack);*/ })
+    .pipe(source('build.js'))
+    .pipe(buffer())
+    .pipe($.uglify())
+    .pipe($.rename('build.min.js'))
+    .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.js }/`))
 })
 
 
@@ -109,7 +102,7 @@ gulp.task('sass_globbing', () => {
 /**
  * scss
  */
-gulp.task('sass', ['sass_globbing'], () => {
+gulp.task('sass', () => {
   return gulp.src(`${ pkg.src.scss }/{style,print}.scss`)
     .pipe($.plumber({
       errorHandler: function(err) {
@@ -227,14 +220,14 @@ gulp.task('sprite', () => {
                   .pipe($.spritesmith({
                     imgName: 'spritesheet.png',
                     cssName: `_sprites.scss`,
-                    imgPath: `${ pkg.img }/spritesheet.png`,
+                    imgPath: `/${ pkg.img }/spritesheet.png`,
                     padding: 20
                   }));
   let mobile = gulp.src(`${ pkg.src.img }/sprite/mobile/*.png`)
                 .pipe($.spritesmith({
                   imgName: 'spritesheet.mobile.png',
                   cssName: '_sprites.mobile.scss',
-                  imgPath: `${ pkg.img }/spritesheet.mobile.png`,
+                  imgPath: `/${ pkg.img }/spritesheet.mobile.png`,
                   padding: 40
                 }));
 
@@ -255,7 +248,9 @@ gulp.task('serve', () => {
       .pipe($.webserver({
           livereload: true,
           port: `${ pkg.port }`,
-          host: 'localhost'
+          host: '0.0.0.0',
+          directoryListing: false//,
+          //open: true
       }));
 })
 
@@ -267,16 +262,9 @@ gulp.task('watch', () => {
   gulp.watch(`${ pkg.src.hbs }/**/*.{hbs,yml,json}`, ['prettify']);
   gulp.watch(`${ pkg.src.scss }/**/*.scss`, ['minify-css']);
   gulp.watch(`${ pkg.src.js }/**/*.js`, ['browserify']);
-
-  // 'assemble',
-  // 'prettify'
-
-  // 'browserify',
-  // 'uglify',
-  // 'copy:js'
 })
 
-gulp.task('default', ['serve', 'watch']);
+gulp.task('default', ['serve', 'sass_globbing', 'watch']);
 
 gulp.task('publish', [
   'imagemin',

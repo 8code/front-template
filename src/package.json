@@ -16,6 +16,7 @@
     "babelify": "^7.3.0",
     "bower": "^1.8.0",
     "browserify": "^12.0.2",
+    "browserify-shim": "^3.8.12",
     "debowerify": "^1.5.0",
     "gulp": "^3.9.1",
     "gulp-assemble": "^0.3.3",
@@ -46,11 +47,13 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "gulp-util": "^3.0.7"
+    "gulp-util": "^3.0.7",
+    "velocity-animate": "^1.3.1"
   },
   "browserify": {
     "transform": [
       [
+        "browserify-shim",
         "babelify",
         {
           "presets": [
@@ -65,19 +68,21 @@
       "es2015"
     ]
   },
-  "browser": {
-    "jquery": "./js/libs/jquery-3.1.1.min",
-    "lodash": "./js/libs/lodash.min",
-    "easing": "./js/libs/jquery.easing.1.3",
-    "mobileEvents": "./js/libs/jquery.mobile-events",
-    "is": "./js/libs/is",
-    "Handlebars": "./js/libs/handlebars.runtime",
-    "slick": "./js/libs/slick",
-    "imagesloaded": "./js/libs/imagesloaded.pkgd.min",
-    "cookie": "./js/libs/jquery.cookie",
-    "velocity": "./js/libs/velocity.min"
+  "browserify-shim": {
+    "jquery": "global:$"
   },
-  "browserify-shim": {},
+  "browser": {
+    "jQuery": "./js/libs/jquery.js",
+    "lodash": "./js/libs/lodash.min.js",
+    "easing": "./js/libs/jquery.easing.js",
+    "mobileEvents": "./js/libs/jquery.mobile-events.js",
+    "is": "./js/libs/is.js",
+    "Handlebars": "./js/libs/handlebars.runtime.js",
+    "slick": "./js/libs/slick.js",
+    "imagesloaded": "./js/libs/imagesloaded.pkgd.min.js",
+    "cookie": "./js/libs/jquery.cookie.js",
+    "velocity": "./node_modules/velocity-animate/velocity.js"
+  },
   "static_html": "../www/static",
   "public": "../www/html",
   "img": "assets/themes/package/img",
