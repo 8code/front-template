@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "gulp-util": "^3.0.7",
+    "jquery.easing": "^1.4.1",
     "velocity-animate": "^1.3.1"
   },
   "browserify": {
@@ -74,7 +75,7 @@
   "browser": {
     "jQuery": "./js/libs/jquery.js",
     "lodash": "./js/libs/lodash.min.js",
-    "easing": "./js/libs/jquery.easing.js",
+    "easing": "./node_modules/jquery.easing/jquery.easing.js",
     "mobileEvents": "./js/libs/jquery.mobile-events.js",
     "is": "./js/libs/is.js",
     "Handlebars": "./js/libs/handlebars.runtime.js",
