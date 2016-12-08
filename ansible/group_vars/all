@@ -1,0 +1,37 @@
+---
+project: package
+hostname: example
+charset: utf8
+
+user_name: package
+user_password: password
+user_group: www
+user_password_hashed: hashe
+
+project_root: "/home/{{ user_name }}/dist"
+document_root: "{{ project_root }}/www/html"
+log_root: "/var/log"
+bin_path: "/usr/bin"
+
+httpd_error_log: "{{ log_root }}/httpd/error_log"
+httpd_access_log: "{{ log_root }}/httpd/access_log combined"
+httpd_basic_auth: no
+
+php_max_file_size: 40M
+
+admin_email: sena.rn68.g@gmail.com
+
+mysql_dbname: "{{ project }}"
+mysql_dbname_for_test: "{{ project }}_test"
+mysql_user_name: "{{user_name}}"
+mysql_user_password: "{{user_password}}"
+mysql_host: localhost
+mysql_root_password: password
+
+wp_sitename: wordpress package
+wp_admin: admin
+wp_password: password
+wp_email: "sena.rn68.g@gmai.com"
+wp_theme: "{{ project }}"
+wp_table_prefix: wp
+wp_test_root: "{{ project_root }}/www/test"
