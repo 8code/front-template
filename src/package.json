@@ -5,9 +5,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "8code",
+  "author": "yuichi aoki",
   "license": "ISC",
   "devDependencies": {
+    "assemble": "^0.17.1",
     "babel": "^6.5.2",
     "babel-core": "^6.18.2",
     "babel-polyfill": "^6.16.0",
@@ -19,7 +20,6 @@
     "browserify-shim": "^3.8.12",
     "debowerify": "^1.5.0",
     "gulp": "^3.9.1",
-    "gulp-assemble": "^0.3.3",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-babel": "^6.1.2",
     "gulp-clean-css": "^2.0.13",
@@ -50,6 +50,11 @@
     "gulp-util": "^3.0.7",
     "velocity-animate": "^1.3.1"
   },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
   "browserify": {
     "transform": [
       [
@@ -63,27 +68,30 @@
       ]
     ]
   },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  },
-  "browserify-shim": {
-    "jquery": "global:$"
-  },
   "browser": {
-    "jQuery": "./js/libs/jquery.js",
+    "jquery": "./js/libs/jquery.js",
     "lodash": "./js/libs/lodash.min.js",
     "mobileEvents": "./js/libs/jquery.mobile-events.js",
-    "is": "./js/libs/is.js",
     "Handlebars": "./js/libs/handlebars.runtime.js",
-    "slick": "./js/libs/slick.js",
-    "imagesloaded": "./js/libs/imagesloaded.pkgd.min.js",
+    "helper": "./js/libs/helper.js",
     "cookie": "./js/libs/jquery.cookie.js",
-    "velocity": "./node_modules/velocity-animate/velocity.js"
+    "imagesloaded": "./js/libs/imagesloaded.pkgd.min.js",
+    "slick": "./js/libs/slick.js",
+    "velocity": "./node_modules/velocity-animate/velocity.js",
+    "inview": "./js/libs/jquery.inview.js"
+  },
+  "browserify-shim": {
+    "jquery": "$",
+    "lodash": "jquery",
+    "mobileEvents": "jquery",
+    "cookie": "jquery",
+    "slick": "jquery",
+    "velocity": "jquery",
+    "inview": "jquery"
   },
   "static_html": "../www/static",
   "public": "../www/html",
+  "assets": "assets/themes/package",
   "img": "assets/themes/package/img",
   "js": "assets/themes/package/js",
   "css": "assets/themes/package/css",
@@ -94,5 +102,48 @@
     "scss": "./scss",
     "hbs": "./hbs"
   },
-  "port": 6002
+  "port": 6002,
+  "rc": {
+    "prettify": {
+      "brace_style": "collapse",
+      "indent_char": " ",
+      "indent_inner_html": true,
+      "indent_scripts": "keep",
+      "indent_size": 2,
+      "max_preserve_newlines": 0,
+      "preserve_newlines": true,
+      "wrap_line_length": 0,
+      "unformatted": [
+        "a",
+        "abbr",
+        "acronym",
+        "address",
+        "b",
+        "bdo",
+        "big",
+        "cite",
+        "code",
+        "del",
+        "dfn",
+        "em",
+        "font",
+        "i",
+        "ins",
+        "kbd",
+        "pre",
+        "q",
+        "s",
+        "samp",
+        "small",
+        "span",
+        "strike",
+        "strong",
+        "sub",
+        "sup",
+        "tt",
+        "u",
+        "var"
+      ]
+    }
+  }
 }

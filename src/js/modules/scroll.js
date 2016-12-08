@@ -1,82 +1,63 @@
-var _, velocity;
-
-_ = require('lodash');
-velocity = require('velocity');
-require('easing');
-
+import $ from 'jquery';
+import 'velocity';
+import { $WINDOW, isMobile } from '../helpers';
+import ViewBase from '../view_base';
 
 /**
- * constructor
+ * スクロール
  */
-var Scroll = function() {};
+export default class extends ViewBase {
+  constructor(el) {
+    super(el);
 
+    this.body = $('body');
+    this.to;
+    this.offset;
 
-/**
- * 初期化
- */
-Scroll.init = function() {
-  this.el = $('.js-scroll');
-  this.body = null;
-  this.target = null;
-  this.to = null;
-
-  // オプション
-  this.duration = 1200;
-  this.easing = 'easeOutQuint';
-  this.offset = 0;
-  this.hash = true;
-
-  if(this.el == null) {
-    return;
+    // オプション
+    this.duration = 1500;
+    this.easing = 'easeOutQuint';
+    this.offsetPC = 0;
+    this.offsetSP = 0;
+    this.hash = true;
   }
-  this.body = $('body');
-  //this.body.addClass('has-load');
 
-  this.bind();
-};
+  initialize() {
+    super.initialize();
 
+  }
 
-/**
- * イベントをバインド
- */
-Scroll.bind = function() {
-  this.onClickTrigger = _.bind(this.onClickTrigger, this);
+  bind() {
+    this.$el
+      .on('click', this.onClickTrigger.bind(this));
 
-  this.el.on('click', this.onClickTrigger);
-};
+    $WINDOW
+      .on('resize', this.onResizeWindow.bind(this))
+      .trigger('resize');
+  }
 
+  onScroll(e) {
+    this.to = e === '#' ? this.body : $(e);
 
-/**
- * スクロール処理
- */
-Scroll.scroll = function(el) {
-  this.to = el === '#' ? this.body : $(el);
-  //this.offset = offset;
+    this.to.velocity("scroll", {
+      duration: this.duration,
+      easing: this.easing,
+      offset: this.offset
+    },
+    function(){
+      if(this.hash) {
+        history.pushState('', '', h);
+      }
+    });
+  }
 
-  this.to.velocity("scroll", {
-    duration: this.duration,
-    easing: this.easing,
-    offset: this.offset
-  },
-  function(){
-    if(this.hash) {
-      history.pushState('', '', h);
-    }
-  });
+  onClickTrigger(e) {
+    let $eventTarget = $(e.currentTarget);
+    this.onScroll( $eventTarget.attr('href') );
+  }
+
+  onResizeWindow() {
+    this.offset = isMobile() ? this.offsetSP : this.offsetPC;
+  }
+
 }
-
-
-/**
- * イベントハンドラ
- */
-Scroll.onClickTrigger = function(e) {
-  var hash;
-
-  this.target = $(e.currentTarget);
-  hash = this.target.attr('href');
-  //offset = this.target.data('offset');
-
-  this.scroll(hash);
-};
-
-module.exports = Scroll;

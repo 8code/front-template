@@ -9,17 +9,16 @@ import transform from 'vinyl-transform'
 import through2 from 'through2'
 import gulpLoadPlugins from 'gulp-load-plugins'
 
-const $ = gulpLoadPlugins()
 const app = assemble()
 const pkg = require('./package.json')
-
+const $ = gulpLoadPlugins()
 
 /**
  * javascript
  */
 gulp.task('browserify', () => {
 
-  watchify(browserify(`${ pkg.src.js }/script.js`, { debug: true }))
+  watchify(browserify(`${ pkg.src.js }/main.js`, { debug: true }))
     .transform(babelify, { presets: ['es2015'] })
     .bundle()
     .on('error', (err) => { console.log(`Error : ${ err.message }`); /*console.log(err.stack);*/ })
@@ -38,6 +37,9 @@ gulp.task('load', (cb) => {
   app.layouts(`${ pkg.src.hbs }/layouts/*.hbs`);
   app.pages(`${ pkg.src.hbs }/*.hbs`);
   app.partials(`${ pkg.src.hbs }/partials/**/*.hbs`);
+  app.data({
+    assets: pkg.assets
+  });
   cb();
 })
 
@@ -56,9 +58,7 @@ gulp.task('assemble', ['load'], () => {
  */
 gulp.task('prettify', ['assemble'], () => {
   gulp.src( `${ pkg.static_html }/**/*.html` )
-    .pipe($.prettify({
-      config: '.prettifyrc'
-    }))
+    .pipe($.prettify( pkg.rc.prettify ))
     .pipe(gulp.dest(`${ pkg.static_html }/`))
 })
 
