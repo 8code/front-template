@@ -43,14 +43,9 @@ export default class extends ViewBase {
   }
 
   onResizeWindow() {
-    if(isMobile()) {
-      /**
-       * $('.js-accordion')の部分は定義されている物を取りたい
-       */
+    if(!isMobile()) {
       $('.js-accordion').removeClass('is-open');
-      $('[data-target]').hide();
-    } else {
-      $('[data-target]').show();
+      $('[data-target]').removeAttr('style');
     }
   }
 }
