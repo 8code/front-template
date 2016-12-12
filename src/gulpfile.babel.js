@@ -7,6 +7,7 @@ import source from 'vinyl-source-stream'
 import buffer from 'vinyl-buffer'
 import transform from 'vinyl-transform'
 import through2 from 'through2'
+import pngquant from 'imagemin-pngquant'
 import gulpLoadPlugins from 'gulp-load-plugins'
 
 const app = assemble()
@@ -154,9 +155,29 @@ gulp.task('minify-css', ['autoprefixer'], () => {
 
 
 /**
+ * imagemin
+ */
+gulp.task('imagemin', () => {
+  return gulp.src([
+    `${ pkg.src.img }/{,**/}*.{jpg,png,gif,svg,ico}`,
+    `!${ pkg.src.img }/sprite/{,**/}*.png`,
+    ])
+    .pipe($.imagemin({
+      optimizationLevel: 4,
+      progressive: true,
+      interlaced: true,
+      multipass: true,
+      svgoPlugins: [{removeViewBox: false}],
+      use: [ pngquant({ quality: 60-80, speed: 1}) ]
+    }))
+    .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.img }/`))
+})
+
+
+/**
  * copy
  */
-gulp.task('copy', () => {
+gulp.task('copy', ['imagemin'], () => {
   return gulp.src(
     [
       `${ pkg.static_html }/${ pkg.img }`,
@@ -169,18 +190,6 @@ gulp.task('copy', () => {
     .pipe(gulp.dest(`${ pkg.public }/`));
 })
 
-
-/**
- * imagemin
- */
-gulp.task('imagemin', () => {
-  gulp.src([`${ pkg.static_html }/${ pkg.src.img }/**/*.{png,jpg,jpeg,svg}`,
-            `!${ pkg.static_html }/${ pkg.src.img }/sprite/*.png`])
-    .pipe($.imagemin({
-      optimizationLevel: 3
-    }))
-    .pipe(gulp.dest(`${ pkg.static_html }/${ pkg.img }/`))
-})
 
 
 /**
@@ -265,9 +274,4 @@ gulp.task('watch', () => {
 })
 
 gulp.task('default', ['serve', 'sass_globbing', 'watch']);
-
-gulp.task('publish', [
-  'imagemin',
-  'copy',
-  'compress'
-]);
+gulp.task('publish', ['copy', 'compress']);
