@@ -163,9 +163,7 @@ gulp.task('imagemin', () => {
     `!${ pkg.src.img }/sprite/{,**/}*.png`,
     ])
     .pipe($.imagemin({
-      optimizationLevel: 4,
-      progressive: true,
-      interlaced: true,
+      optimizationLevel: 6,
       multipass: true,
       svgoPlugins: [{removeViewBox: false}],
       use: [ pngquant({ quality: 60-80, speed: 1}) ]
