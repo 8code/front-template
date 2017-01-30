@@ -1,6 +1,7 @@
 import gulp from 'gulp'
 import assemble from 'assemble'
 import browserify from 'browserify'
+import reactify from 'reactify'
 import babelify from 'babelify'
 import watchify from 'watchify'
 import source from 'vinyl-source-stream'
@@ -20,7 +21,8 @@ const $ = gulpLoadPlugins()
 gulp.task('browserify', () => {
 
   watchify(browserify(`${ pkg.src.js }/main.js`, { debug: true }))
-    .transform(babelify, { presets: ['es2015'] })
+    .transform(babelify, { presets: ['es2015', 'react'] })
+    .transform(reactify)
     .bundle()
     .on('error', (err) => { console.log(`Error : ${ err.message }`); /*console.log(err.stack);*/ })
     .pipe(source('build.js'))

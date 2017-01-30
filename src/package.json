@@ -13,6 +13,7 @@
     "babel-core": "^6.18.2",
     "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
     "babel-register": "^6.18.0",
     "babelify": "^7.3.0",
     "bower": "^1.8.0",
@@ -41,6 +42,7 @@
     "gulp.spritesmith": "^6.2.1",
     "handlebars-helpers": "^0.5.8",
     "imagemin-pngquant": "^5.0.0",
+    "reactify": "^1.1.1",
     "through2": "^2.0.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
@@ -49,6 +51,8 @@
   },
   "dependencies": {
     "gulp-util": "^3.0.7",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
     "velocity-animate": "^1.3.1"
   },
   "babel": {
@@ -79,7 +83,8 @@
     "imagesloaded": "./js/libs/imagesloaded.pkgd.min.js",
     "slick": "./js/libs/slick.js",
     "velocity": "./node_modules/velocity-animate/velocity.js",
-    "inview": "./js/libs/jquery.inview.js"
+    "inview": "./js/libs/jquery.inview.js",
+    "react": "./node_modules/react/react.js"
   },
   "browserify-shim": {
     "jquery": "$",
