@@ -20,13 +20,13 @@ $gravater-width: 200px;
 $gravater-height: 200px;
 $gravater-total-width: 200px;
 $gravater-total-height: 200px;
-$gravater-image: 'assets/themes/package/img/spritesheet.png';
-$gravater: (0px, 0px, 0px, 0px, 200px, 200px, 200px, 200px, 'assets/themes/package/img/spritesheet.png', 'gravater', );
+$gravater-image: '/assets/themes/package/img/spritesheet.png';
+$gravater: (0px, 0px, 0px, 0px, 200px, 200px, 200px, 200px, '/assets/themes/package/img/spritesheet.png', 'gravater', );
 $spritesheet-width: 200px;
 $spritesheet-height: 200px;
-$spritesheet-image: 'assets/themes/package/img/spritesheet.png';
+$spritesheet-image: '/assets/themes/package/img/spritesheet.png';
 $spritesheet-sprites: ($gravater, );
-$spritesheet: (200px, 200px, 'assets/themes/package/img/spritesheet.png', $spritesheet-sprites, );
+$spritesheet: (200px, 200px, '/assets/themes/package/img/spritesheet.png', $spritesheet-sprites, );
 
 /*
 The provided mixins are intended to be used with the array-like variables

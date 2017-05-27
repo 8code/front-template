@@ -1,3 +1,7 @@
+import checkModule from '../../utils/check_module_lib/check_module.js';
+checkModule('gulp-sass-globbing');
+
+const sassGlobbing = require('gulp-sass-globbing');
 
 module.exports = (gulp, PATH, $) => {
 
@@ -13,7 +17,7 @@ module.exports = (gulp, PATH, $) => {
   let globbing = (files) => {
     files.forEach(f => {
       gulp.src(`${f}/*.scss`, {cwd: `${ PATH.src.scss }/`})
-        .pipe($.sassGlobbing(
+        .pipe(sassGlobbing(
           {
             path: `_${f}.scss`
           },

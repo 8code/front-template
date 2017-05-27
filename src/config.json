@@ -1,0 +1,21 @@
+{
+  "devMode": true,
+  "uses": {
+    "assemble"        : "COMMENT: 静的サイト構築用モジュール",
+    "assemble"        : true,
+    "browserify"      : "COMMENT: Null",
+    "browserify"      : true,
+    "compress"        : "COMMENT: css, jsをgzip化するモジュールします",
+    "compress"        : true,
+    "imagemin"        : "COMMENT: src内のimgを圧縮します。jpg, png, gif, svgに対応",
+    "imagemin"        : true,
+    "sass"            : "COMMENT: Null",
+    "sass"            : true,
+    "sass_globbing"   : "COMMENT: scssをフォルダ単位でグルーピングします",
+    "sass_globbing"   : true,
+    "serve"           : "COMMENT: Null",
+    "serve"           : true,
+    "sprite_smith"    : "COMMENT: Null",
+    "sprite_smith"    : true
+  }
+}

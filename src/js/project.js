@@ -4,7 +4,7 @@ import _debounce from 'lodash.debounce';
 
 
 // modules
-import HelloWorld from './modules/parallax';
+import HelloWorld from './modules/hello_world';
 //import Accordion from './modules/effect';
 //import Scroll from './modules/message';
 

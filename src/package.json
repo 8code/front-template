@@ -1,6 +1,6 @@
 {
-  "name": "package",
-  "version": "1.0.0",
+  "name": "front-template",
+  "version": "0.0.1",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,34 +15,15 @@
     "babel-register": "^6.18.0",
     "babelify": "^7.3.0",
     "bower": "^1.8.0",
-    "browserify": "^12.0.2",
-    "browserify-shim": "^3.8.12",
     "debowerify": "^1.5.0",
     "fs-extra": "^1.0.0",
     "gulp": "^3.9.1",
-    "gulp-assemble": "^0.3.3",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-babel": "^6.1.2",
-    "gulp-clean-css": "^2.0.13",
-    "gulp-copy": "0.0.2",
-    "gulp-gzip": "^1.4.0",
-    "gulp-handlebars": "^4.0.0",
-    "gulp-imagemin": "^3.1.1",
     "gulp-load-plugins": "^1.4.0",
-    "gulp-minify-css": "^1.2.4",
     "gulp-plumber": "^1.1.0",
-    "gulp-prettify": "^0.5.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.3.2",
-    "gulp-sass-globbing": "0.0.2",
-    "gulp-sourcemaps": "^1.9.1",
-    "gulp-uglify": "^2.0.0",
     "gulp-watch": "^4.3.10",
-    "gulp-webserver": "^0.9.1",
-    "gulp.spritesmith": "^6.2.1",
-    "imagemin-mozjpeg": "^6.0.0",
-    "imagemin-pngquant": "^5.0.0",
-    "handlebars-helpers": "^0.5.8",
     "through2": "^2.0.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
@@ -89,6 +70,7 @@
     "slick": "jquery",
     "velocity": "jquery"
   },
+  "dist": "../www/static",
   "static_html": "../www/static",
   "public": "../www/html",
   "img": "assets/themes/package/img",
@@ -100,6 +82,11 @@
     "js": "./js",
     "scss": "./scss",
     "hbs": "./hbs"
+  },
+  "gulp": {
+    "tasks": "./gulp/tasks",
+    "utils": "./gulp/utils",
+    "languages": "./gulp/languages"
   },
   "port": 6002
 }
