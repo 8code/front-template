@@ -17,17 +17,17 @@
 
 ### Frontend
 
+グローバルに必要なモジュール（未インストールの場合のみ）
+```sh
+$ babel --version # バージョンが表示されるならば babel-cli は不要
+$ sudo npm i -g babel-cli
+```
+
 ```sh
 $ cd src
 $ npm i
 $ gulp
 # serve: localhost:6002
-```
-
-グローバルに必要なモジュール（未インストールの場合のみ）
-```sh
-$ babel --version # バージョンが表示されるならば babel-cli は不要
-$ sudo npm i -g babel-cli
 ```
 
 --
