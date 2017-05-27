@@ -21,6 +21,7 @@
 $ cd src
 $ npm i
 $ gulp
+# serve: localhost:6002
 ```
 
 グローバルに必要なモジュール（未インストールの場合のみ）
