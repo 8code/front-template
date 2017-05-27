@@ -9,6 +9,7 @@
 
 - Node.js 5.12.0
 - Gulp
+- Babel
 
 ---
 
@@ -25,7 +26,7 @@ $ gulp
 グローバルに必要なモジュール（未インストールの場合のみ）
 ```sh
 $ babel --version # バージョンが表示されるならば babel-cli は不要
-$ sudo npm i -g assemble browserify babel-cli
+$ sudo npm i -g babel-cli
 ```
 
 --
@@ -40,11 +41,16 @@ $ sudo npm i -g assemble browserify babel-cli
 ├── src/ # プリプロセッサ系のソースファイル（SassやEct,Handlebars等）を格納
 │   ├── gulpfile.babel.js
 │   ├── node_modules/ # gitignore対象
-│   ├── package.json # パッケージ／プロジェクト設定ファイル
+│   ├── config.json # gulpを走らせた際にロードするtaskを設定。devModeがfalseの場合、distが公開ディレクトリにスイッチ。
+│   ├── package.json # パッケージ／パス指定
+│   ├── gulp
+│   │   ├── tasks
+│   │   │   └── {taskDir} # テンプレートで使用する際の一連の処理を書いたtaskファイルを格納
+│   │   └── utils
 │   ├── hbs
 │   │   ├── data
 │   │   ├── layouts
-│   │   │   └── default.hbs # HTMLルート要素を記述。ページはassembleで結合
+│   │   │   └── default.hbs # HTMLルート要素を記述。assembleでコンパイル
 │   │   ├── partials
 │   │   └── index.hbs
 │   ├── img
@@ -57,7 +63,7 @@ $ sudo npm i -g assemble browserify babel-cli
 │   └── scss
 │       ├── base
 │       ├── constants
-│       ├── generated # globbingで[ base, constants, layouts, mixins, modules, utils ]を生成
+│       ├── generated # globbing使用。[ base, constants, layouts, mixins, modules, utils ]を生成
 │       ├── layouts
 │       ├── mixins
 │       ├── modules
