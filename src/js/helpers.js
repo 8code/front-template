@@ -1,7 +1,7 @@
-import $ from 'jquery';
+//import $ from 'jquery';
+const $ = require('./libs/jquery.js');
 
 let _appVersion = navigator.appVersion.toLowerCase();
-
 /**
  *
  */

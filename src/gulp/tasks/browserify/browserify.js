@@ -6,6 +6,7 @@ checkModule([
 ]);
 
 const browserify = require('browserify');
+const browserifyShim = require('browserify-shim');
 const babelify = require('babelify');
 const watchify = require('watchify');
 const source = require('vinyl-source-stream');
@@ -17,6 +18,7 @@ module.exports = (gulp, PATH, $) => {
   return () => {
     watchify(browserify(`${ PATH.src.js }/main.js`, { debug: true }))
       .transform(babelify, { presets: ['es2015'] })
+      .transform(browserifyShim)
       .bundle()
       .on('error', (err) => { console.log(`Error : ${ err.message }`); /*console.log(err.stack);*/ })
       .pipe(source('build.js'))
