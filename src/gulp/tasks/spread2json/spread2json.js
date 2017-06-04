@@ -12,7 +12,7 @@ checkModule([
   'gulp-if'
 ]);
 
-import authorize from '../utils/gapi_authorize/gapi_authorize.js';
+let authorize = require('../../utils/gapi_authorize/gapi_authorize.js');
 
 module.exports = (gulp, PATH, $) => {
 
