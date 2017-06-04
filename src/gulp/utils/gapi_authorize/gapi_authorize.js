@@ -5,21 +5,25 @@ var googleAuth = require('google-auth-library');
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/script-nodejs-quickstart.json
-var SCOPES = ['https://www.googleapis.com/auth/drive'];
+var SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets'];
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'script-nodejs-quickstart.json';
-
+var RESOURCE = {}, CALLBACK = {};
 // Load client secrets from a local file.
-fs.readFile('./client_secret.json', function processClientSecrets(err, content) {
-  if (err) {
-    console.log('Error loading client secret file: ' + err);
-    return;
-  }
-  // Authorize a client with the loaded credentials, then call the
-  // Google Apps Script Execution API.
-  authorize(JSON.parse(content), callAppsScript);
-});
+export default function(resource, callback) {
+  RESOURCE = resource;
+  CALLBACK = callback;
+  fs.readFile('./client_secret.json', function processClientSecrets(err, content) {
+    if (err) {
+      console.log('Error loading client secret file: ' + err);
+      return;
+    }
+    // Authorize a client with the loaded credentials, then call the
+    // Google Apps Script Execution API.
+    authorize(JSON.parse(content), callAppsScript);
+  });
+}
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -102,15 +106,13 @@ function storeToken(token) {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 function callAppsScript(auth) {
-  var scriptId = 'ENTER_YOUR_SCRIPT_ID_HERE';
+  var scriptId = '1r1s8Qk7VP9fG_jgJ0njScN9YPyoI-oGs8529_hdrqvD6krjmD7aCLStp';
   var script = google.script('v1');
 
   // Make the API request. The request object is included here as 'resource'.
   script.scripts.run({
     auth: auth,
-    resource: {
-      function: 'getFoldersUnderRoot'
-    },
+    resource: RESOURCE,
     scriptId: scriptId
   }, function(err, resp) {
     if (err) {
@@ -144,8 +146,8 @@ function callAppsScript(auth) {
       if (Object.keys(folderSet).length == 0) {
         console.log('No folders returned!');
       } else {
-        console.log(JSON.stringify(folderSet));
-
+        CALLBACK(folderSet);
+        //console.log(JSON.stringify(folderSet));
         // console.log('Folders under your root folder:');
         // Object.keys(folderSet).forEach(function(id){
         //   console.log('\t%s (%s)', folderSet[id], id);
@@ -155,3 +157,19 @@ function callAppsScript(auth) {
 
   });
 }
+
+// export default function (_resources, callback) {
+// //fetchJson.getSpreadJson = function(_resources, callback){
+//   RESOURCE = _resources;
+//   FINISH_CB = callback;
+//   //SAVE_AS_JSON_FILEPATH = _saveAsFilePath;
+//   fs.readFile(gasConf.clientSecretFile, function processClientSecrets(err, content) {
+//     if (err) {
+//       console.log('Error loading client secret file: ' + err);
+//       return;
+//     }
+//     // Authorize a client with the loaded credentials, then call the
+//     // Google Apps Script Execution API.
+//     authorize(JSON.parse(content), callAppsScript);
+//   });
+// };

@@ -3,6 +3,8 @@ var s2j_c = {
   getData: {}
 };
 
+
+// https://gist.github.com/daichan4649/50b988f66193c5bf0ffe#file-main-gs
 s2j_c.convertSheet = function(sheet) {
   // first line(title)
   var colStartIndex = 1;
