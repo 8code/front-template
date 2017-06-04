@@ -13,6 +13,8 @@
     "sass"            : true,
     "sass_globbing"   : "COMMENT: scssをフォルダ単位でグルーピングします",
     "sass_globbing"   : true,
+    "spread2json"     : "COMMENT: スプレッドシートをjson形式でダウンロードします",
+    "spread2json"     : true,
     "serve"           : "COMMENT: Null",
     "serve"           : true,
     "sprite_smith"    : "COMMENT: Null",

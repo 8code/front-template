@@ -28,6 +28,12 @@ function getTask(task) {
 
 
 /**
+ * spread2json
+ */
+gulp.task('spread2json', getTask('spread2json'))
+
+
+/**
  * assemble
  */
 gulp.task('assemble', getTask('assemble'))
@@ -87,3 +93,4 @@ gulp.task('watch', () => {
 
 gulp.task('default', ['serve', 'sass_globbing', 'watch']);
 gulp.task('build', ['imagemin', 'compress']);
+gulp.task('get', ['spread2json']);
