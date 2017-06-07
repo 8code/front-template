@@ -40,6 +40,12 @@ gulp.task('assemble', getTask('assemble'))
 
 
 /**
+ * assemble_i18n
+ */
+gulp.task('assemble_i18n', getTask('assemble_i18n'))
+
+
+/**
  * javascript
  */
 gulp.task('browserify', getTask('browserify'))
@@ -86,7 +92,7 @@ gulp.task('serve', getTask('serve'))
  * watch
  */
 gulp.task('watch', () => {
-  gulp.watch(`${ pkg.src.hbs }/**/*.{hbs,yml,json}`, ['assemble']);
+  gulp.watch(`${ pkg.src.hbs }/**/*.{hbs,yml,json}`, ['assemble_i18n']);
   gulp.watch(`${ pkg.src.scss }/**/*.scss`, ['sass']);
   gulp.watch(`${ pkg.src.js }/**/*.js`, ['browserify']);
 })

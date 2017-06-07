@@ -3,15 +3,18 @@ var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
 
+const yellow  = '\u001b[33m';
+const reset   = '\u001b[0m';
+
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/script-nodejs-quickstart.json
-var SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets'];
+var SCOPES = ['https://www.googleapis.com/auth/script.storage', 'https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/script.external_request'];
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'script-nodejs-quickstart.json';
 var RESOURCE = {}, CALLBACK = {};
 // Load client secrets from a local file.
-export default function(resource, callback) {
+export default function (resource, callback) {
   RESOURCE = resource;
   CALLBACK = callback;
   fs.readFile('./client_secret.json', function processClientSecrets(err, content) {
@@ -106,9 +109,8 @@ function storeToken(token) {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 function callAppsScript(auth) {
-  var scriptId = '1r1s8Qk7VP9fG_jgJ0njScN9YPyoI-oGs8529_hdrqvD6krjmD7aCLStp';
+  var scriptId = 'M_W5Ql7uS5COo9eqKIgy2arcQggsTmNIl';
   var script = google.script('v1');
-
   // Make the API request. The request object is included here as 'resource'.
   script.scripts.run({
     auth: auth,
@@ -146,6 +148,7 @@ function callAppsScript(auth) {
       if (Object.keys(folderSet).length == 0) {
         console.log('No folders returned!');
       } else {
+        console.log(`${yellow}gapiAuthorize: Authorized successfully.${reset}`);
         CALLBACK(folderSet);
         //console.log(JSON.stringify(folderSet));
         // console.log('Folders under your root folder:');
@@ -157,19 +160,3 @@ function callAppsScript(auth) {
 
   });
 }
-
-// export default function (_resources, callback) {
-// //fetchJson.getSpreadJson = function(_resources, callback){
-//   RESOURCE = _resources;
-//   FINISH_CB = callback;
-//   //SAVE_AS_JSON_FILEPATH = _saveAsFilePath;
-//   fs.readFile(gasConf.clientSecretFile, function processClientSecrets(err, content) {
-//     if (err) {
-//       console.log('Error loading client secret file: ' + err);
-//       return;
-//     }
-//     // Authorize a client with the loaded credentials, then call the
-//     // Google Apps Script Execution API.
-//     authorize(JSON.parse(content), callAppsScript);
-//   });
-// };

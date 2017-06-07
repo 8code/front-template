@@ -1,11 +1,11 @@
-var s2j_c = {
+var s2j = {
   convertSheet: {},
   getData: {}
 };
 
 
 // https://gist.github.com/daichan4649/50b988f66193c5bf0ffe#file-main-gs
-s2j_c.convertSheet = function(sheet) {
+s2j.convertSheet = function(sheet) {
   // first line(title)
   var colStartIndex = 1;
   var rowNum = 1;
@@ -44,7 +44,7 @@ s2j_c.convertSheet = function(sheet) {
   return json;
 }
 
-s2j_c.getData = function(data) {
+s2j.getData = function(data) {
   var book = SpreadsheetApp.openById(data.sheetId);
   var sheet = book.getSheetByName(data.sheetName);
   var json = this.convertSheet(sheet);
@@ -60,5 +60,5 @@ function spread2json(f, data) {
   //var f = 'getData';
   //var data = { sheetId: '1og709ajh6JPG-uJA2nJCkFoq0tFITKX50gym4EL8ymE', sheetName: 'translate' };
 
-  return s2j_c[f](data);
+  return s2j[f](data);
 }

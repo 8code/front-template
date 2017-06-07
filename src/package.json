@@ -70,6 +70,7 @@
     "slick": "jquery",
     "velocity": "jquery"
   },
+  "assets": "/assets/themes/package",
   "dist": "../www/static",
   "static_html": "../www/static",
   "public": "../www/html",

@@ -2,7 +2,9 @@
   "devMode": true,
   "uses": {
     "assemble"        : "COMMENT: 静的サイト構築用モジュール",
-    "assemble"        : true,
+    "assemble"        : false,
+    "assemble_i18n"   : "COMMENT: 静的サイト構築用モジュール（多言語対応版）",
+    "assemble_i18n"   : true,
     "browserify"      : "COMMENT: Null",
     "browserify"      : true,
     "compress"        : "COMMENT: css, jsをgzip化するモジュールします",
