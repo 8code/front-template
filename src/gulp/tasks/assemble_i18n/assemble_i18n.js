@@ -7,7 +7,8 @@ checkModule([
   'handlebars-helpers',
   'js-yaml',
   'gulp-foreach',
-  'path'
+  'path',
+  'gulp-ignore'
 ]);
 
 
