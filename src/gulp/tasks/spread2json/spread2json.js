@@ -10,19 +10,25 @@ const fs = require('fs-extra');
 
 module.exports = (gulp, PATH, $) => {
 
-  let option = {
+  let auth = {
+    scriptId: 'M_W5Ql7uS5COo9eqKIgy2arcQggsTmNIl',
+    scope: ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/script.external_request'],
+    token: 'script-nodejs-quickstart.json'
+  };
+
+  let resources = {
+    function: 'spread2json',
+    parameters: [
+      'getData', {
         sheetId: '1og709ajh6JPG-uJA2nJCkFoq0tFITKX50gym4EL8ymE',
         sheetName: 'シート1'
-      };
-
-  let resources =  {
-    function: 'spread2json',
-    parameters: ['getData', option],
+      }
+    ],
     devMode: true
   };
 
   let getJson = () => {
-    authorize(resources, (translateJson) => {
+    authorize(auth, resources, (translateJson) => {
       fs.mkdirsSync(PATH.gulp.languages);
 
       Object.keys(translateJson).forEach((key, i) => {

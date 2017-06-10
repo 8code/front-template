@@ -8,15 +8,19 @@ const reset   = '\u001b[0m';
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/script-nodejs-quickstart.json
-var SCOPES = ['https://www.googleapis.com/auth/script.storage', 'https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/script.external_request'];
+//var SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/script.external_request'];
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
-var TOKEN_PATH = TOKEN_DIR + 'script-nodejs-quickstart.json';
-var RESOURCE = {}, CALLBACK = {};
+//var TOKEN_PATH = TOKEN_DIR + 'script-nodejs-quickstart.json';
+var RESOURCE = {}, CALLBACK = {}, SCOPES, TOKEN_PATH, SCRIPT_ID;
 // Load client secrets from a local file.
-export default function (resource, callback) {
+export default function (auth, resource, callback) {
   RESOURCE = resource;
   CALLBACK = callback;
+  SCOPES = auth.scope;
+  TOKEN_PATH = TOKEN_DIR + auth.token;
+  SCRIPT_ID = auth.scriptId;
+
   fs.readFile('./client_secret.json', function processClientSecrets(err, content) {
     if (err) {
       console.log('Error loading client secret file: ' + err);
@@ -109,13 +113,13 @@ function storeToken(token) {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 function callAppsScript(auth) {
-  var scriptId = 'M_W5Ql7uS5COo9eqKIgy2arcQggsTmNIl';
+  //var scriptId = 'M_W5Ql7uS5COo9eqKIgy2arcQggsTmNIl';
   var script = google.script('v1');
   // Make the API request. The request object is included here as 'resource'.
   script.scripts.run({
     auth: auth,
     resource: RESOURCE,
-    scriptId: scriptId
+    scriptId: SCRIPT_ID
   }, function(err, resp) {
     if (err) {
       // The API encountered a problem before the script started executing.
