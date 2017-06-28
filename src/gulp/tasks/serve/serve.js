@@ -1,7 +1,3 @@
-console.log(__dirname);
-import checkModule from '../../utils/check_module_lib/check_module.js';
-checkModule('gulp-webserver');
-
 const webserver = require('gulp-webserver');
 
 module.exports = (gulp, PATH, $) => {

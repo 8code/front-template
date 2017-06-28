@@ -1,5 +1,25 @@
 {
   "devMode": true,
+  "assets": "/assets/themes/package",
+  "dist": "../www/static",
+  "static_html": "../www/static",
+  "public": "../www/html",
+  "img": "assets/themes/package/img",
+  "js": "assets/themes/package/js",
+  "css": "assets/themes/package/css",
+  "font": "assets/themes/package/fonts",
+  "src": {
+    "img": "./img",
+    "js": "./js",
+    "scss": "./scss",
+    "hbs": "./hbs"
+  },
+  "gulp": {
+    "tasks": "./gulp/tasks",
+    "utils": "./gulp/utils",
+    "languages": "./gulp/languages"
+  },
+  "port": 6002,
   "uses": {
     "assemble"        : "COMMENT: 静的サイト構築用モジュール",
     "assemble"        : false,

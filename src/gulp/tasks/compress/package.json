@@ -1,11 +1,12 @@
 {
-  "name": "gulp-module-task-webserver",
+  "name": "gulp-module-task-compress",
   "version": "0.0.1",
   "description": "custom task on front package.",
-  "main": "serve.js",
+  "main": "compress.js",
   "private": true,
   "dependencies": {
-    "gulp-webserver": "^0.9.1"
+    "gulp-gzip": "^1.4.0",
+    "gulp-merge": "^0.1.1"
   },
   "devDependencies": {},
   "author": "yuichi aoki",

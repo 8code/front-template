@@ -1,11 +1,11 @@
 {
-  "name": "gulp-module-task-webserver",
+  "name": "gulp-module-task-sass_globbing",
   "version": "0.0.1",
   "description": "custom task on front package.",
-  "main": "serve.js",
+  "main": "sass_globbing.js",
   "private": true,
   "dependencies": {
-    "gulp-webserver": "^0.9.1"
+    "gulp-sass-globbing": "^0.0.2"
   },
   "devDependencies": {},
   "author": "yuichi aoki",

@@ -1,10 +1,3 @@
-import checkModule from '../../utils/check_module_lib/check_module.js';
-checkModule([
-  'browserify',
-  'browserify-shim',
-  'gulp-uglify'
-]);
-
 const browserify = require('browserify');
 const browserifyShim = require('browserify-shim');
 const babelify = require('babelify');

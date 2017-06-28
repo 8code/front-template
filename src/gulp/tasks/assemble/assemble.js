@@ -1,13 +1,3 @@
-import checkModule from '../../utils/check_module_lib/check_module.js';
-checkModule([
-  'assemble',
-  'gulp-assemble',
-  'gulp-handlebars',
-  'gulp-prettify',
-  'handlebars-helpers',
-  'js-yaml'
-]);
-
 const assemble = require('assemble');
 const prettify = require('gulp-prettify');
 const through = require('through2');

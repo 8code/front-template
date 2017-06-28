@@ -1,12 +1,3 @@
-import checkModule from '../../utils/check_module_lib/check_module.js';
-checkModule([
-  'gulp-sass',
-  'gulp-autoprefixer',
-  'gulp-sourcemaps',
-  'gulp-minify-css',
-  'gulp-clean-css'
-]);
-
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const cleanCss = require('gulp-clean-css');

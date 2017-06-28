@@ -1,17 +1,3 @@
-import checkModule from '../../utils/check_module_lib/check_module.js';
-checkModule([
-  'assemble',
-  //'gulp-assemble',
-  'gulp-handlebars',
-  'gulp-prettify',
-  'handlebars-helpers',
-  'js-yaml',
-  'gulp-foreach',
-  'path',
-  'gulp-ignore'
-]);
-
-
 const fs = require('fs-extra');
 const path = require('path');
 const foreach = require('gulp-foreach');

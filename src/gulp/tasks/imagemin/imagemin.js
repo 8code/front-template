@@ -1,11 +1,3 @@
-import checkModule from '../../utils/check_module_lib/check_module.js';
-checkModule([
-  'imagemin-pngquant',
-  'imagemin-mozjpeg',
-  'gulp-chmod',
-  'gulp-imagemin'
-]);
-
 const pngquant = require('imagemin-pngquant');
 const imagemin = require('gulp-imagemin');
 const chmod = require('gulp-chmod');

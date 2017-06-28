@@ -1,9 +1,3 @@
-import checkModule from '../../utils/check_module_lib/check_module.js';
-checkModule([
-  'gulp-gzip',
-  'gulp-merge'
-]);
-
 const _gzip = require('gulp-gzip');
 const _merge = require('gulp-merge');
 

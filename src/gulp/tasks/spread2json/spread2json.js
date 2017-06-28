@@ -1,10 +1,3 @@
-import checkModule from '../../utils/check_module_lib/check_module.js';
-checkModule([
-  'readline',
-  'googleapis',
-  'google-auth-library'
-]);
-
 import authorize from '../../utils/gapi_authorize/gapi_authorize.js';
 const fs = require('fs-extra');
 

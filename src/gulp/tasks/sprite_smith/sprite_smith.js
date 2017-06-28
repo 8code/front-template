@@ -1,6 +1,3 @@
-import checkModule from '../../utils/check_module_lib/check_module.js';
-checkModule('gulp.spritesmith');
-
 const spritesmith = require('gulp.spritesmith');
 
 module.exports = (gulp, PATH, $) => {

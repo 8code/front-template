@@ -1,6 +1,3 @@
-import checkModule from '../../utils/check_module_lib/check_module.js';
-checkModule('gulp-sass-globbing');
-
 const sassGlobbing = require('gulp-sass-globbing');
 
 module.exports = (gulp, PATH, $) => {
