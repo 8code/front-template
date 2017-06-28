@@ -59,7 +59,7 @@ export default class packageManager {
     //console.log(CYAN + 'front-package-manager: Start installing additional packages.' + RESET);
     //return execSync('npm --prefix $(npm root)../ i ' + _installArr.join(' '), {stdio: [0, 1, 2]});
     if(_installArr.length) {
-      return execSync(`ls $(npm root) | grep -x -e ${_moduleArr.join(' -e ')}; if [ $? == "1" ]; then npm --prefix $(npm root)/../ i ${_installArr.join(' ')}; fi;`, {stdio: [0, 1, 2]});
+      return EXEC_SYNC(`ls $(npm root) | grep -x -e ${_moduleArr.join(' -e ')}; if [ $? == "1" ]; then npm --prefix $(npm root)/../ i ${_installArr.join(' ')}; fi;`, {stdio: [0, 1, 2]});
     }
   }
 

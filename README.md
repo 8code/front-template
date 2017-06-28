@@ -7,9 +7,10 @@
 
 ## Dependencies
 
-- Node.js 5.12.0
+- Node.js >= 6.11.0
 - Gulp
 - Babel
+- [assemble](https://www.npmjs.com/package/assemble)
 
 ---
 
@@ -36,8 +37,8 @@ $ gulp
 ├── src/ # プリプロセッサ系のソースファイル（SassやEct,Handlebars等）を格納
 │   ├── gulpfile.babel.js
 │   ├── node_modules/ # gitignore対象
-│   ├── config.json # gulpを走らせた際にロードするtaskを設定。devModeがfalseの場合、distが公開ディレクトリにスイッチ。
-│   ├── package.json # パッケージ／パス指定
+│   ├── config.json # gulpを走らせた際にロードするtask／パスの設定
+│   ├── package.json
 │   ├── gulp
 │   │   ├── tasks
 │   │   │   └── {taskDir} # テンプレートで使用する際の一連の処理を書いたtaskファイルを格納

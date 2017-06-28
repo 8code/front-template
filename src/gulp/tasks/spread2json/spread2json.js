@@ -1,4 +1,4 @@
-import authorize from '../../utils/gapi_authorize/gapi_authorize.js';
+const authorize = require('../../utils/gapi_authorize/gapi_authorize.js');
 const fs = require('fs-extra');
 
 module.exports = (gulp, PATH, $) => {

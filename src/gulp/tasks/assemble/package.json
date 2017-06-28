@@ -9,7 +9,8 @@
     "gulp-handlebars": "^4.0.0",
     "gulp-prettify": "^0.5.0",
     "handlebars-helpers": "^0.8.2",
-    "js-yaml": "^3.8.4"
+    "js-yaml": "^3.8.4",
+    "gulp-ignore": "^2.0.2"
   },
   "devDependencies": {},
   "author": "yuichi aoki",

@@ -105,7 +105,7 @@ gulp.task('serve', packageManager.getTask('serve'))
  * watch
  */
 gulp.task('watch', () => {
-  gulp.watch(`${ conf.src.hbs }/**/*.{hbs,yml,json}`, ['assemble_i18n']);
+  gulp.watch(`${ conf.src.hbs }/**/*.{hbs,yml,json}`, ['assemble']);
   gulp.watch(`${ conf.src.scss }/**/*.scss`, ['sass']);
   gulp.watch(`${ conf.src.js }/**/*.js`, ['browserify']);
 })
