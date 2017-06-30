@@ -1,9 +1,6 @@
-const $ = require('./libs/jquery.js');
+import $ from 'jquery';
 import { $WINDOW, isWindows } from './helpers';
 import _debounce from 'lodash.debounce';
-
-import { cookie } from 'cookie';
-console.log(cookie);
 
 // modules
 import HelloWorld from './modules/hello_world';

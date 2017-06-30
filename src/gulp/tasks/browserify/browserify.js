@@ -11,7 +11,7 @@ module.exports = (gulp, PATH, $) => {
   return () => {
     watchify(browserify(`${ PATH.src.js }/main.js`, { debug: true }))
       .transform(babelify, { presets: ['es2015'] })
-      .transform(browserifyShim)
+      //.transform(browserifyShim)
       .bundle()
       .on('error', (err) => { console.log(`Error : ${ err.message }`); /*console.log(err.stack);*/ })
       .pipe(source('build.js'))
