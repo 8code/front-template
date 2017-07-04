@@ -9,10 +9,10 @@
   "css": "assets/themes/package/css",
   "font": "assets/themes/package/fonts",
   "src": {
-    "img": "./img",
-    "js": "./js",
-    "scss": "./scss",
-    "hbs": "./hbs"
+    "hbs": "./hbs",
+    "img": "./assets/img",
+    "scss": "./assets/scss",
+    "js": "./assets/js"
   },
   "gulp": {
     "tasks": "./gulp/tasks",
