@@ -27,7 +27,9 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "vinyl-transform": "^1.0.0",
-    "watchify": "^3.7.0"
+    "watchify": "^3.7.0",
+    "googleapis": "^15.0.0",
+    "google-auth-library": "^0.9.10"
   },
   "dependencies": {
     "front-package-manager": "file:local_modules/front-package-manager",
@@ -42,14 +44,5 @@
     ]
   },
   "localDependencies": {
-    "gulp-module-task-browserify": "0.0.2",
-    "gulp-module-task-compress": "0.0.1",
-    "gulp-module-task-imagemin": "0.0.1",
-    "gulp-module-task-sass": "0.0.1",
-    "gulp-module-task-sass_globbing": "0.0.1",
-    "gulp-module-task-spread2json": "0.0.1",
-    "gulp-module-task-serve": "0.0.1",
-    "gulp-module-task-sprite_smith": "0.0.1",
-    "gulp-module-task-assemble": "0.0.1"
   }
 }
