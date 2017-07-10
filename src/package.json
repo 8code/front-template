@@ -19,6 +19,7 @@
     "fs-extra": "^1.0.0",
     "gulp": "^3.9.1",
     "gulp-load-plugins": "^1.4.0",
+    "gulp-merge": "^0.1.1",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-util": "^3.0.7",
