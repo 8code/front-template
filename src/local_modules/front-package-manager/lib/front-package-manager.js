@@ -73,12 +73,12 @@ var packageManager = function () {
       //console.log(CYAN + 'front-package-manager: Start installing additional packages.' + RESET);
       //return execSync('npm --prefix $(npm root)../ i ' + _installArr.join(' '), {stdio: [0, 1, 2]});
       if (_installArr.length) {
-        return execSync('ls $(npm root) | grep -x -e ' + _moduleArr.join(' -e ') + '; if [ $? == "1" ]; then npm --prefix $(npm root)/../ i ' + _installArr.join(' ') + '; fi;', { stdio: [0, 1, 2] });
+        return EXEC_SYNC('ls $(npm root) | grep -x -e ' + _moduleArr.join(' -e ') + '; if [ $? == "1" ]; then npm --prefix $(npm root)/../ i ' + _installArr.join(' ') + '; fi;', { stdio: [0, 1, 2] });
       }
     }
   }, {
     key: 'getTask',
-    value: function getTask(task) {
+    value: function getTask(task, option) {
       if (!this.uses[task]) {
         return;
       }
@@ -89,7 +89,7 @@ var packageManager = function () {
       // }
       console.log(CYAN + '\'getTask: ' + task + ' is active.' + RESET);
       var _taskPath = require.resolve(PROJECT_ROOT + '/' + this.taskPath + '/' + task + '/' + task);
-      return require(_taskPath)(this.taskRunner, this.taskConfig, this.globalPlugins);
+      return require(_taskPath)(this.taskRunner, this.taskConfig, this.globalPlugins, option);
     }
   }]);
 

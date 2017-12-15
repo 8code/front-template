@@ -1,15 +1,17 @@
 {
   "devMode": true,
-  "assets": "/assets/themes/package",
+  "assets": "/assets",
   "dist": "../www/static",
   "static_html": "../www/static",
   "public": "../www/html",
-  "img": "assets/themes/package/img",
-  "js": "assets/themes/package/js",
-  "css": "assets/themes/package/css",
-  "font": "assets/themes/package/fonts",
+  "img": "assets/img",
+  "js": "assets/js",
+  "css": "assets/css",
+  "font": "assets/fonts",
   "src": {
     "hbs": "./hbs",
+    "jsx": "./jsx",
+    "vue": "./vue",
     "img": "./assets/img",
     "scss": "./assets/scss",
     "js": "./assets/js"
@@ -27,6 +29,11 @@
     "assemble_i18n"   : false,
     "browserify"      : "COMMENT: --",
     "browserify"      : false,
+<<<<<<< HEAD:src/config.json
+=======
+    "browser_sync"    : "COMMENT: --",
+    "browser_sync"    : true,
+>>>>>>> be83c8e49b3aecd969feb9f54683d0deb9793fae:src/config/config.json
     "compress"        : "COMMENT: css, jsをgzip化するモジュールします",
     "compress"        : false,
     "imagemin"        : "COMMENT: src内のimgを圧縮します。jpg, png, gif, svgに対応",
@@ -40,6 +47,12 @@
     "serve"           : "COMMENT: --",
     "serve"           : false,
     "sprite_smith"    : "COMMENT: --",
+<<<<<<< HEAD:src/config.json
     "sprite_smith"    : false
+=======
+    "sprite_smith"    : true,
+    "webpack"         : "COMMENT: --",
+    "webpack"         : true
+>>>>>>> be83c8e49b3aecd969feb9f54683d0deb9793fae:src/config/config.json
   }
 }

@@ -5,9 +5,7 @@ import PackageManager from 'front-package-manager';
 
 const cyan    = '\u001b[36m';
 const reset   = '\u001b[0m';
-//const pkg = require('./package.json');
-const conf = require('./config.json');
-
+const conf = require('./config/config.json');
 const $ = gulpLoadPlugins({
   pattern: ['gulp-*', 'gulp.*', 'fs-extra'],
   rename: { 'fs-extra': 'fs' }
@@ -24,81 +22,49 @@ const packageManager = new PackageManager({
 
 packageManager.checkPackages();
 
-// function getTask(task) {
-//   if(!conf.uses[task]) { return; }
-
-//   let taskPath = `./gulp/tasks/${ task }`;
-
-//   if(fs.existsSync(taskPath) && fs.statSync(taskPath).isDirectory) {
-//     taskPath = `${taskPath}/${ task }`;
-//   }
-//   if(!conf.devMode) {
-//     pkg.dist = pkg.public;
-//   }
-//   console.log(`${cyan}getTask: '${task}' is true${reset}`);
-//   return require(taskPath)(gulp, pkg, $);
-// }
-
 
 /**
- * spread2json
+ * Spread2Json
  */
 gulp.task('spread2json', packageManager.getTask('spread2json'))
 
 
 /**
- * assemble
+ * TemplateEngine
  */
 gulp.task('assemble', packageManager.getTask('assemble'))
-
-
-/**
- * assemble_i18n
- */
 gulp.task('assemble_i18n', packageManager.getTask('assemble_i18n'))
 
 
 /**
- * javascript
+ * JavaScript
  */
 gulp.task('browserify', packageManager.getTask('browserify'))
+gulp.task('webpack', packageManager.getTask('webpack'))
+gulp.task('webpack-react', packageManager.getTask('webpack', { 'use': 'react' }))
+gulp.task('webpack-vue', packageManager.getTask('webpack', { 'use': 'vue' }))
 
 
 /**
- * globbing
+ * SCSS
  */
 gulp.task('sass_globbing', packageManager.getTask('sass_globbing'))
-
-
-/**
- * scss
- */
 gulp.task('sass', packageManager.getTask('sass'))
 
 
 /**
- * imagemin
+ * Compresser/Optimizer
  */
 gulp.task('imagemin', packageManager.getTask('imagemin'))
-
-
-/**
- * compress
- */
+gulp.task('sprite', packageManager.getTask('sprite_smith'))
 gulp.task('compress', packageManager.getTask('compress'))
 
 
 /**
- * spritesmith
- */
-gulp.task('sprite', packageManager.getTask('sprite_smith'))
-
-
-/**
- * serve
- * e.g. hostsで[127.0.0.1 localhost]が有効になっている必要があります。
+ * Hosting
  */
 gulp.task('serve', packageManager.getTask('serve'))
+gulp.task('browser-sync', packageManager.getTask('browser_sync', { 'hmr': false, 'use': 'vue' }))
 
 
 /**
@@ -107,7 +73,10 @@ gulp.task('serve', packageManager.getTask('serve'))
 gulp.task('watch', () => {
   gulp.watch(`${ conf.src.hbs }/**/*.{hbs,yml,json}`, ['assemble']);
   gulp.watch(`${ conf.src.scss }/**/*.scss`, ['sass']);
-  gulp.watch(`${ conf.src.js }/**/*.js`, ['browserify']);
+  //gulp.watch(`${ conf.src.js }/**/*.js`, ['browserify']);
+  gulp.watch(`${ conf.src.js }/**/*.js`, ['webpack']);
+  //gulp.watch(`${ conf.src.js }/**/*.js`, ['webpack-vue']);
+  //gulp.watch(`${ conf.src.vue }/**/*.{vue,js}`, ['webpack-vue']);
 })
 
 gulp.task('default', ['serve', 'sass_globbing', 'watch']);
