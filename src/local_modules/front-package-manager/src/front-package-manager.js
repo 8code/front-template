@@ -63,7 +63,7 @@ export default class packageManager {
     }
   }
 
-  getTask(task) {
+  getTask(task, option) {
     if(!this.uses[task]) {
       return;
     }
@@ -74,7 +74,7 @@ export default class packageManager {
     // }
     console.log(`${CYAN}'getTask: ${task} is active.${RESET}`);
     var _taskPath = require.resolve(`${PROJECT_ROOT}/${this.taskPath}/${task}/${task}`);
-    return require(_taskPath)(this.taskRunner, this.taskConfig, this.globalPlugins);
+    return require(_taskPath)(this.taskRunner, this.taskConfig, this.globalPlugins, option);
   }
 
 };
