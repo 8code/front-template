@@ -46,5 +46,6 @@
     ]
   },
   "localDependencies": {
+    "gulp-module-task-assemble": "0.0.1"
   }
 }

@@ -1,0 +1,30 @@
+version: "2"
+services:
+  wordpress:
+    image: wordpress:4.9-php5.6
+    ports:
+      - 6001:80
+    volumes:
+      - ./www/html/assets:/var/www/html/assets
+    links:
+      - mysql
+    environment:
+      WORDPRESS_DB_HOST: "mysql:3306"
+      WORDPRESS_DB_NAME: example
+      WORDPRESS_DB_USER: example
+      WORDPRESS_DB_PASSWORD: example
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/var/lib/mysql
+    working_dir: /var/sql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: example
+      MYSQL_USER: example
+      MYSQL_PASSWORD: example
+volumes:
+    db-data:
+      driver: local
