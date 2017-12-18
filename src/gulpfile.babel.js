@@ -63,7 +63,6 @@ gulp.task('compress', packageManager.getTask('compress'))
 /**
  * Hosting
  */
-gulp.task('serve', packageManager.getTask('serve'))
 gulp.task('browser-sync', packageManager.getTask('browser_sync', { 'hmr': false, 'use': 'vue' }))
 
 
@@ -79,6 +78,6 @@ gulp.task('watch', () => {
   //gulp.watch(`${ conf.src.vue }/**/*.{vue,js}`, ['webpack-vue']);
 })
 
-gulp.task('default', ['serve', 'sass_globbing', 'watch']);
+gulp.task('default', ['browser-sync', 'sass_globbing', 'watch']);
 gulp.task('build', ['imagemin', 'compress']);
 gulp.task('get', ['spread2json']);
